@@ -18,7 +18,7 @@ const updateStockPrices = async () => {
   try {
 
     const startTime = { hours: 15, minutes: 30 }; 
-    const endTime = { hours: 11, minutes: 30 };
+    const endTime = { hours: 9, minutes: 15 };
 
     // Check if current time is between 3:30 PM and 11:30 PM
     if (isTimeBetween(startTime, endTime)) {
