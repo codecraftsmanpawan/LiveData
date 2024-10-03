@@ -48,22 +48,29 @@ apiSocket.on("connect", () => {
 // Function to handle and update live data
 const handleLiveData = async (data) => {
   try {
-    const { product } = data;
+    const { InstrumentIdentifier } = data;
 
-    const existingStock = await Stock.findOne({ product });
+    // Search for the stock using InstrumentIdentifier
+    const existingStock = await Stock.findOne({ InstrumentIdentifier });
 
     if (!existingStock) {
       // Create a new stock if it does not exist
       const newStock = new Stock(data);
       await newStock.save();
+      console.log(`Added new stock: ${InstrumentIdentifier}`);
     } else {
       // Update existing stock with new data
-      await Stock.updateOne({ product }, { $set: data });
+      await Stock.updateOne(
+        { InstrumentIdentifier },
+        { $set: data }
+      );
+      // console.log(`Updated stock: ${InstrumentIdentifier}`);
     }
   } catch (error) {
     console.error("Error updating stocks:", error);
   }
 };
+
 
 // Start Express server
 app.listen(8080, () => {
